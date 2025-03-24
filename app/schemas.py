@@ -1,6 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 from typing import Optional
-
+from datetime import datetime, timezone
 class UserBase(BaseModel):
     username: str
 
@@ -18,12 +18,15 @@ class ClientBase(BaseModel):
     address: str
     account_number: str
 
+
 class ClientCreate(ClientBase):
     pass
 
 class ClientOut(ClientBase):
     id: int
     balance: float
+    subscription_fee: float
+    last_fee_date: datetime
 
     model_config = ConfigDict(from_attributes=True)
 

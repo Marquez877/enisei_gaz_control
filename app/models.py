@@ -1,7 +1,8 @@
+# from django.db.models.expressions import Col
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from .database import Base
-
+# класс пользователей, которые могут сделать вход
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
@@ -13,7 +14,7 @@ from sqlalchemy import DateTime
 from datetime import datetime
 
 from datetime import datetime, timezone
-
+# пробный шаблонный класс
 class Client(Base):
     __tablename__ = "clients"
     id = Column(Integer, primary_key=True, index=True)
@@ -23,7 +24,18 @@ class Client(Base):
     balance = Column(Float, default=0.0)
     subscription_fee = Column(Float, default=100.0)
     last_fee_date = Column(DateTime, default=lambda: datetime.now(timezone.utc))
-
+# класс первой таблицы, 119 человек
+class first_of_them(Base):
+    __tablename__ = "Gaz Control Services"
+    id = Column(Integer, primary_key=True, index=True)
+    owner = Column(String)
+    address = Column(String)
+    number_of_apps = Column(Integer)
+    subs = Column(String)
+    subs_fee = Column(Integer,default=0.0)
+    balance = Column(Float, default=0.0)
+    last_fee_date = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+# класс оплаты за ТСЖ
 class Payment(Base):
     __tablename__ = "payments"
     id = Column(Integer, primary_key=True, index=True)

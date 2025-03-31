@@ -14,9 +14,14 @@ def get_db():
     finally:
         db.close()
 
+from fastapi import HTTPException
+
 @router.get("/", response_model=list[ClientOut], dependencies=[Depends(admin_required)])
 def get_clients(db: Session = Depends(get_db)):
-    return db.query(Client).all()
+    try:
+        return db.query(Client).all()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/", response_model=ClientOut, dependencies=[Depends(admin_required)])
 def create_client(client: ClientCreate, db: Session = Depends(get_db)):

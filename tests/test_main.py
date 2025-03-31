@@ -17,7 +17,7 @@ def db_session():
     db.close()
 
 def test_create_client(db_session: Session):
-    response = client.post("/clients/", json={"name": "Иван", "address": "ул. Ленина", "account_number": "12345"})
+    response = client.post("/clients/", json={"name": "Иван", "address": "ул. Ленина", "account_number": "1234567890", "phone_number": "+79991234567"})
     assert response.status_code == 200
     assert response.json()["name"] == "Иван"
 

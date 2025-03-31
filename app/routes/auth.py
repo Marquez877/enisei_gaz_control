@@ -2,7 +2,6 @@ import jwt
 from fastapi import APIRouter, Depends, HTTPException
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
-
 from ..database import SessionLocal
 from ..models import User
 from ..schemas import UserCreate, UserOut
@@ -32,5 +31,5 @@ def login(user: UserCreate, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.username == user.username).first()
     if not db_user or not pwd_context.verify(user.password, db_user.password_hash):
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    token = jwt.encode({"sub": db_user.username}, SECRET_KEY, algorithm="HS256")
+    token = jwt.encode({"sub": db_user.username, "is_admin": db_user.is_admin}, SECRET_KEY, algorithm="HS256")
     return {"access_token": token}

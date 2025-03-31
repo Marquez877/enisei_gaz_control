@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 from ..models import Client
 
-
 def add_subscription_fees(db: Session):
     today = datetime.utcnow()
     clients = db.query(Client).all()

@@ -1,6 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, validator
 from typing import Optional
 from datetime import datetime, timezone
+
 class UserBase(BaseModel):
     username: str
 
@@ -17,7 +18,19 @@ class ClientBase(BaseModel):
     name: str
     address: str
     account_number: str
+    phone_number: int
 
+    @validator('name')
+    def name_must_not_be_empty(cls, v):
+        if not v.strip():
+            raise ValueError('Имя не должно быть пустым')
+        return v
+
+    @validator('account_number')
+    def account_number_must_be_valid(cls, v):
+        if not v.isdigit() or len(v) != 10:
+            raise ValueError('Лицевой счёт должен состоять из 10 цифр')
+        return v
 
 class ClientCreate(ClientBase):
     pass

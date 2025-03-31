@@ -1,8 +1,8 @@
-# from django.db.models.expressions import Col
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Boolean, DateTime
 from sqlalchemy.orm import relationship
 from .database import Base
-# класс пользователей, которые могут сделать вход
+from datetime import datetime, timezone
+
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
@@ -10,21 +10,17 @@ class User(Base):
     password_hash = Column(String)
     is_admin = Column(Boolean, default=False)
 
-from sqlalchemy import DateTime
-from datetime import datetime
-
-from datetime import datetime, timezone
-# пробный шаблонный класс
 class Client(Base):
     __tablename__ = "clients"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
     address = Column(String)
     account_number = Column(String, unique=True, index=True)
+    phone_number = Column(Integer)  # Изменено с Integer на String
     balance = Column(Float, default=0.0)
     subscription_fee = Column(Float, default=100.0)
     last_fee_date = Column(DateTime, default=lambda: datetime.now(timezone.utc))
-# класс первой таблицы, 119 человек
+
 class first_of_them(Base):
     __tablename__ = "Gaz Control Services"
     id = Column(Integer, primary_key=True, index=True)
@@ -32,10 +28,10 @@ class first_of_them(Base):
     address = Column(String)
     number_of_apps = Column(Integer)
     subs = Column(String)
-    subs_fee = Column(Integer,default=0.0)
+    subs_fee = Column(Integer, default=0.0)
     balance = Column(Float, default=0.0)
     last_fee_date = Column(DateTime, default=lambda: datetime.now(timezone.utc))
-# класс оплаты за ТСЖ
+
 class Payment(Base):
     __tablename__ = "payments"
     id = Column(Integer, primary_key=True, index=True)
